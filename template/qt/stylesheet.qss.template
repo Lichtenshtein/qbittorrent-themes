@@ -22,12 +22,17 @@ QMenuBar {
 }
 
 QMenuBar::item {
-  padding: 5px 10px;
+  margin: 5px;
   color: %FG_PRIMARY%;
 }
 
+QMenuBar::item:selected:hover {
+  background: %BG_HOVER%;
+  color: %FG_BRIGHT%;
+}
+
 QMenuBar::item:selected {
-  background: %BG_PRIMARY%;
+  background: %BG_ALTERNATE%;
   color: %ACCENT%;
 }
 
@@ -46,13 +51,21 @@ QMenu {
 }
 
 QMenu::item {
-  margin: 0;
-  padding: 5px 10px 5px 5px;
+  margin: 5px;
   background: %BG_PRIMARY%;
   color: %FG_PRIMARY%;
 }
 
-QMenu::item:hover,
+QMenu::item:hover {
+  background: %BG_HOVER%;
+  color: %FG_BRIGHT%;
+}
+
+QMenu::item:selected:hover {
+  background: %BG_HOVER%;
+  color: %FG_BRIGHT%;
+}
+
 QMenu::item:selected {
   background: %BG_SECONDARY%;
   color: %FG_PRIMARY%;
@@ -64,18 +77,18 @@ QMenu::separator {
 }
 
 QMenu::icon {
-  padding: 0 5px;
+ /* padding: 0 5px; */
 }
 
 QMenu::indicator {
-  width: 16px;
-  height: 16px;
-  left: 5px;
+  width: 5px;
+  height: 5px;
+ /* left: 5px; */
 }
 
 QMenu::indicator:non-exclusive {
-  width: 16px;
-  height: 16px;
+  width: 5px;
+  height: 5px;
   image: url(:/uitheme/icons/checkbox_unchecked.svg);
 }
 
@@ -109,14 +122,11 @@ QToolBar::separator {
 QToolButton {
   border: none;
   background: %BG_PRIMARY%;
-  padding: 6px;
   margin: 2px;
-  min-width: 32px;
-  min-height: 32px;
 }
 
 QToolButton:hover {
-  background: %BG_SECONDARY%;
+  background: %BG_HOVER%;
   color: %FG_PRIMARY%;
   border: none;
   border-radius: 3px;
@@ -183,7 +193,6 @@ QLabel:disabled {
 */
 
 QToolTip {
-  padding: 5px;
   background: %BG_PRIMARY%;
   border: 2px solid %BORDER%;
   color: %FG_PRIMARY%;
@@ -195,7 +204,6 @@ QToolTip {
 
 QTabWidget::pane {
   margin: 0;
-  padding: 0;
 }
 
 /*
@@ -211,7 +219,6 @@ QTabBar::tab:top {
   background: %TAB_BG%;
   color: %FG_PRIMARY%;
   margin: 0 2px 0 0;
-  padding: 6px 10px;
   border: 1px solid %TAB_BORDER%;
   border-bottom: 2px solid transparent;
   border-top-left-radius: 3px;
@@ -219,7 +226,7 @@ QTabBar::tab:top {
 }
 
 QTabBar::tab:top:hover {
-  background: %BG_SECONDARY%;
+  background: %BG_HOVER%;
   color: %FG_PRIMARY%;
 }
 
@@ -239,25 +246,27 @@ QListView {
 }
 
 QListView::item {
-  padding: 5px;
 }
 
 QListView::item:hover {
-  background: %BG_SECONDARY%;
-  color: %FG_PRIMARY%;
+  background: %BG_HOVER%;
+  color: %FG_BRIGHT%;
+}
+
+QListView::item:selected:hover {
+  background: %BG_HOVER%;
+  color: %FG_BRIGHT%;
 }
 
 QListView::item:selected:active {
   outline: none;
   background: %BG_SELECTED%;
   color: %FG_PRIMARY%;
-  padding: 5px;
 }
 
 QListView::item:selected:!active {
   background: %BG_SELECTED%;
   color: %FG_PRIMARY%;
-  padding: 5px;
 }
 
 /* Ensure consistent selection visuals across item views */
@@ -276,11 +285,9 @@ QTableView {
 }
 
 QTableView QLabel {
-  padding: 0 5px;
 }
 
 QTableView QCheckBox, QTableView QLabel {
-  padding: 0 5px;
 }
 
 /*
@@ -294,25 +301,27 @@ QTreeView {
 }
 
 QTreeView::item {
-  padding: 5px;
   border: none;
 }
 
+QTreeView::item:selected:hover {
+  background: %BG_HOVER%;
+  color: %FG_BRIGHT%;
+}
+
 QTreeView::item:hover {
-  background: %BG_SECONDARY%;
-  color: %FG_PRIMARY%;
+  background: %BG_HOVER%;
+  color: %FG_BRIGHT%;
 }
 
 QTreeView::item:pressed {
   background: %BG_SELECTED%;
   color: %FG_PRIMARY%;
-  padding: 5px;
 }
 
 QTreeView::item:selected {
   background: %BG_SELECTED%;
   color: %FG_PRIMARY%;
-  padding: 5px;
 }
 
 QTreeView:disabled {
@@ -320,7 +329,7 @@ QTreeView:disabled {
 }
 
 QAbstractItemView {
-  alternate-background-color: %BG_PRIMARY%;
+  alternate-background-color: %BG_SECONDARY%;
 }
 
 /*
@@ -364,7 +373,7 @@ QSlider::groove:horizontal {
 QSlider::handle:horizontal {
   width: 12px;
   height: 12px;
-  margin: -4px 0;
+  margin: 0;
   background: %ACCENT%;
   border: 1px solid %BUTTON_BORDER%;
   border-radius: 6px;
@@ -377,7 +386,7 @@ QSlider::groove:vertical {
 QSlider::handle:vertical {
   width: 12px;
   height: 12px;
-  margin: 0 -4px;
+  margin: 0;
   background: %ACCENT%;
   border: 1px solid %BUTTON_BORDER%;
   border-radius: 6px;
@@ -470,7 +479,6 @@ QScrollBar::sub-page:vertical
 QPushButton,
 QPushButton:enabled
 {
-  padding: 6px 10px;
   background: %BUTTON_BG%;
   color: %BUTTON_FG%;
   border: 1px solid %BUTTON_BORDER%;
@@ -478,8 +486,8 @@ QPushButton:enabled
 }
 
 QPushButton:hover {
-  background: %BG_SECONDARY%;
-  color: %FG_PRIMARY%;
+  background: %BG_HOVER%;
+  color: %FG_BRIGHT%;
   border-color: %ACCENT%;
 }
 
@@ -501,8 +509,8 @@ QPushButton:default {
   border-color: %BUTTON_PRIMARY_BORDER%;
 }
 QPushButton:default:hover {
-  background: %BG_SECONDARY%;
-  color: %FG_PRIMARY%;
+  background: %BG_HOVER%;
+  color: %FG_BRIGHT%;
 }
 QPushButton:default:pressed {
   background: %BUTTON_PRIMARY_BG_PRESSED%;
@@ -529,9 +537,7 @@ QLineEdit:read-only
 {
   background: %BG_PRIMARY%;
   color: %FG_PRIMARY%;
-  border: 1px solid %BORDER%;
-  border-radius: 3px;
-  padding: 4px 6px;
+  border: none;
 }
 
 QLineEdit:focus,
@@ -574,19 +580,20 @@ QComboBox QToolButton:pressed {
 
 QHeaderView::section {
   background: %BG_HEADER%;
-  padding: 0 5px;
   color: %FG_PRIMARY%;
-  border: 1px solid %BORDER%;
+  border: 1px solid %ACCENT%;
+  padding-right: 5px;
+  padding-left: 5px;
   border-left: none;
 }
 
 QHeaderView::section:hover {
-  background: %BG_SECONDARY%;
-  color: %FG_PRIMARY%;
+  background: %BG_HOVER%;
+  color: %FG_BRIGHT%;
 }
 
 QHeaderView::section:first {
-  border-left: 1px solid %BORDER%;
+  border-left: 1px solid %ACCENT%;
 }
 
 /*
@@ -605,9 +612,8 @@ QDialog QWidget {
 
 QDialog QTextEdit, QDialog QPlainTextEdit {
   background: %BG_DARK%;
-  border: 1px solid %BORDER%;
+  border: 1px solid %ACCENT%;
   border-radius: 3px;
-  padding: 4px;
   color: %FG_PRIMARY%;
 }
 
@@ -626,7 +632,6 @@ QDialog QListWidget {
   border: none;
   border-right: 2px solid %SIDEBAR_BORDER%;
   outline: none;
-  padding: 12px 4px;
   font-size: 13px;
   font-weight: 500;
   spacing: 12px;
@@ -634,8 +639,6 @@ QDialog QListWidget {
 
 QDialog QListWidget::item {
   min-height: 80px;
-  padding: 8px 20px;
-  margin: 2px;
   border-radius: 15px;
   background: %BG_SECONDARY%;
   transition: all 0.2s ease;
@@ -644,8 +647,8 @@ QDialog QListWidget::item {
 }
 
 QDialog QListWidget::item:hover {
-  background: %BG_MID%;
-  color: %FG_PRIMARY%;
+  background: %BG_HOVER%;
+  color: %FG_BRIGHT%;
 }
 
 QDialog QListWidget::item:selected {
@@ -687,9 +690,13 @@ QTreeView::indicator,
 QListView::indicator,
 QListWidget::indicator,
 QTableView::indicator,
-QTableWidget::indicator {
+QTableWidget::indicator,
+QMenu::indicator {
   width: 17px;
   height: 17px;
+  margin-right: 1px;
+  border: 1px solid %ACCENT%;
+  border-radius: 1px;
 }
 
 QCheckBox::indicator:unchecked,
@@ -698,7 +705,8 @@ QTreeView::indicator:unchecked,
 QListView::indicator:unchecked,
 QListWidget::indicator:unchecked,
 QTableView::indicator:unchecked,
-QTableWidget::indicator:unchecked {
+QTableWidget::indicator:unchecked,
+QMenu::indicator:unchecked {
   image: url(:/uitheme/icons/checkbox_unchecked.svg);
 }
 
@@ -708,7 +716,8 @@ QTreeView::indicator:checked,
 QListView::indicator:checked,
 QListWidget::indicator:checked,
 QTableView::indicator:checked,
-QTableWidget::indicator:checked {
+QTableWidget::indicator:checked,
+QMenu::indicator:checked {
   image: url(:/uitheme/icons/checkbox_checked.svg);
 }
 
@@ -718,7 +727,8 @@ QTreeView::indicator:indeterminate,
 QListView::indicator:indeterminate,
 QListWidget::indicator:indeterminate,
 QTableView::indicator:indeterminate,
-QTableWidget::indicator:indeterminate {
+QTableWidget::indicator:indeterminate,
+QMenu::indicator:indeterminate {
   image: url(:/uitheme/icons/checkbox_indeterminate.svg);
 }
 
@@ -729,7 +739,6 @@ QTableWidget::indicator:indeterminate {
 QComboBox {
   background: %BG_PRIMARY%;
   color: %ACCENT%;
-  padding: 4px 26px 4px 6px;
   border: 1px solid %BORDER%;
   border-radius: 3px;
 }
@@ -744,8 +753,8 @@ QComboBox:disabled {
 }
 
 QComboBox:hover {
-  background: %BG_SECONDARY%;
-  color: %FG_PRIMARY%;
+  background: %BG_HOVER%;
+  color: %FG_BRIGHT%;
   border-color: %ACCENT%;
 }
 
@@ -763,16 +772,17 @@ QComboBox QAbstractItemView {
 }
 
 QComboBox QAbstractItemView::item:hover {
-  background: %BG_SECONDARY%;
-  color: %FG_PRIMARY%;
+  background: %BG_HOVER%;
+  color: %FG_BRIGHT%;
 }
 
 QComboBox::drop-down {
   subcontrol-origin: padding;
   subcontrol-position: top right;
   width: 20px;
-  background: transparent;
-  border-left: 1px solid %BORDER%;
+  background: %BG_SECONDARY%;
+  color: %FG_PRIMARY%;
+  border-left: 1px solid %ACCENT%;
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
 }
@@ -791,7 +801,6 @@ QSpinBox {
   background: %BG_PRIMARY%;
   color: %ACCENT%;
   border: none;
-  padding: 4px;
 }
 
 QSpinBox:disabled {
