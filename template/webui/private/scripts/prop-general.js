@@ -181,9 +181,15 @@ window.qBittorrent.PropGeneral ??= (() => {
                         .replace("%2", data.peers_total);
                     document.getElementById("peers").textContent = peers;
 
-                    document.getElementById("share_ratio").textContent = data.share_ratio.toFixed(2);
+                    let shareRatio = (data.share_ratio === -1) ? "∞" : "0.00";
+                    if ((data.share_ratio !== undefined) && (data.share_ratio !== null) && (data.share_ratio !== -1))
+                        shareRatio = data.share_ratio.toFixed(2);
+                    document.getElementById("share_ratio").textContent = shareRatio;
 
-                    document.getElementById("popularity").textContent = data.popularity.toFixed(2);
+                    let popularity = "";
+                    if ((data.popularity !== undefined) && (data.popularity !== null))
+                        popularity = data.popularity.toFixed(2);
+                    document.getElementById("popularity").textContent = popularity;
 
                     document.getElementById("reannounce").textContent = window.qBittorrent.Misc.friendlyDuration(data.reannounce);
 
