@@ -2206,7 +2206,6 @@ Use ';' to split multiple entries. Can use wildcard '*'.)QBT_TR[CONTEXT=OptionsD
         const updateAddTrackersFromURLEnabled = () => {
             const isAddTrackersFromURLEnabled = document.getElementById("addTrackersFromURLCheckbox").checked;
             document.getElementById("addTrackersURL").disabled = !isAddTrackersFromURLEnabled;
-            document.getElementById("addTrackersURLListTextarea").disabled = !isAddTrackersFromURLEnabled;
         };
 
         // WebUI tab
@@ -2388,15 +2387,29 @@ Use ';' to split multiple entries. Can use wildcard '*'.)QBT_TR[CONTEXT=OptionsD
                     updateColoSchemeSelect(colorScheme);
                     document.getElementById("displayDensitySelect").value = displayDensity;
                     document.getElementById("addTorrentWindowEnabled").checked = addTorrentWindowEnabled === true;
-                    document.getElementById("statusBarExternalIP").checked = pref.status_bar_external_ip;
-                    document.getElementById("performanceWarning").checked = pref.performance_warning;
+
+                    if (pref.status_bar_external_ip !== undefined)
+                        document.getElementById("statusBarExternalIP").checked = pref.status_bar_external_ip;
+                    else
+                        document.getElementById("statusBarExternalIP").style.display = document.getElementById("statusBarExternalIP").labels[0].style.display = "none";
+
+                    if (pref.performance_warning !== undefined)
+                        document.getElementById("performanceWarning").checked = pref.performance_warning;
+                    else
+                        document.getElementById("performanceWarning").style.display = document.getElementById("performanceWarning").labels[0].style.display = "none";
+
                     document.getElementById("displayFullURLTrackerColumn").checked = fullUrlTrackerColumn === true;
                     document.getElementById("useVirtualList").checked = useVirtualList === true;
                     document.getElementById("hideZeroFiltersCheckbox").checked = hideZeroStatusFilters === true;
                     document.getElementById("dblclickDownloadSelect").value = dblclickDownload;
                     document.getElementById("dblclickCompleteSelect").value = dblclickComplete;
                     document.getElementById("dblclickFiltersSelect").value = dblclickFilter;
-                    document.getElementById("confirmTorrentDeletion").checked = pref.confirm_torrent_deletion;
+
+                    if (pref.confirm_torrent_deletion !== undefined)
+                        document.getElementById("confirmTorrentDeletion").checked = pref.confirm_torrent_deletion;
+                    else
+                        document.getElementById("confirmTorrentDeletion").closest("div.formRow").style.display = "none";
+
                     document.getElementById("useAltRowColorsInput").checked = useAltRowColors === true;
                     document.getElementById("filelog_checkbox").checked = pref.file_log_enabled;
                     document.getElementById("filelog_save_path_input").value = pref.file_log_path;
@@ -2423,7 +2436,7 @@ Use ';' to split multiple entries. Can use wildcard '*'.)QBT_TR[CONTEXT=OptionsD
                     }
                     document.getElementById("contentlayout_select").getChildren("option")[index].selected = true;
                     document.getElementById("addToTopOfQueueCheckbox").checked = pref.add_to_top_of_queue;
-                    document.getElementById("dontstartdownloads_checkbox").checked = pref.add_stopped_enabled;
+                    document.getElementById("dontstartdownloads_checkbox").checked = pref.start_paused_enabled;
                     switch (pref.torrent_stop_condition) {
                         case "None":
                             index = 0;
@@ -2441,7 +2454,10 @@ Use ';' to split multiple entries. Can use wildcard '*'.)QBT_TR[CONTEXT=OptionsD
 
                     document.getElementById("preallocateall_checkbox").checked = pref.preallocate_all;
                     document.getElementById("appendext_checkbox").checked = pref.incomplete_files_ext;
-                    document.getElementById("unwantedfolder_checkbox").checked = pref.use_unwanted_folder;
+                    if (pref.use_unwanted_folder !== undefined)
+                        document.getElementById("unwantedfolder_checkbox").checked = pref.use_unwanted_folder;
+                    else
+                        document.getElementById("unwantedfolder_checkbox").closest("div.formRow").style.display = "none";
 
                     // Saving Management
                     document.getElementById("default_tmm_combobox").value = pref.auto_tmm_enabled;
@@ -2663,16 +2679,19 @@ Use ';' to split multiple entries. Can use wildcard '*'.)QBT_TR[CONTEXT=OptionsD
                     // Add trackers
                     document.getElementById("add_trackers_checkbox").checked = pref.add_trackers_enabled;
                     document.getElementById("add_trackers_textarea").value = pref.add_trackers;
-                    document.getElementById("addTrackersFromURLCheckbox").checked = pref.add_trackers_from_url_enabled;
-                    document.getElementById("addTrackersURLListTextarea").value = pref.add_trackers_url_list || "";
-                    document.getElementById("addTrackersURL").value = pref.add_trackers_url || "";
+                    document.getElementById("addTrackersFromURLCheckbox").checked = pref.auto_update_trackers_enabled;
+                    document.getElementById("addTrackersURLListTextarea").value = pref.public_trackers;
+                    document.getElementById("addTrackersURL").value = pref.customize_trackers_list_url;
                     updateAddTrackersEnabled();
                     updateAddTrackersFromURLEnabled();
 
                     // RSS Tab
                     document.getElementById("enable_fetching_rss_feeds_checkbox").checked = pref.rss_processing_enabled;
                     document.getElementById("feed_refresh_interval").value = pref.rss_refresh_interval;
-                    document.getElementById("feedFetchDelay").value = pref.rss_fetch_delay;
+                    if (pref.rss_fetch_delay !== undefined)
+                        document.getElementById("feedFetchDelay").value = pref.rss_fetch_delay;
+                    else
+                        document.getElementById("feedFetchDelay").closest("tr").style.display = "none";
                     document.getElementById("maximum_article_number").value = pref.rss_max_articles_per_feed;
                     document.getElementById("enable_auto_downloading_rss_torrents_checkbox").checked = pref.rss_auto_downloading_enabled;
                     document.getElementById("downlock_repack_proper_episodes").checked = pref.rss_download_repack_proper_episodes;
@@ -2722,7 +2741,11 @@ Use ';' to split multiple entries. Can use wildcard '*'.)QBT_TR[CONTEXT=OptionsD
                     updateHostHeaderValidationSettings();
 
                     // Custom HTTP headers
-                    document.getElementById("webUIUseCustomHTTPHeadersCheckbox").checked = pref.web_ui_use_custom_http_headers_enabled;
+                    if (pref.web_ui_use_custom_http_headers_enabled !== undefined)
+                        document.getElementById("webUIUseCustomHTTPHeadersCheckbox").checked = pref.web_ui_use_custom_http_headers_enabled;
+                    else
+                        document.getElementById("webUIUseCustomHTTPHeadersCheckbox").closest("legend").style.display = "none";
+
                     document.getElementById("webUICustomHTTPHeadersTextarea").value = pref.web_ui_custom_http_headers;
                     updateWebUICustomHTTPHeadersSettings();
 
@@ -2741,17 +2764,29 @@ Use ';' to split multiple entries. Can use wildcard '*'.)QBT_TR[CONTEXT=OptionsD
 
                     // Advanced settings
                     // qBittorrent section
-                    document.getElementById("resumeDataStorageType").value = pref.resume_data_storage_type;
-                    document.getElementById("torrentContentRemoveOption").value = pref.torrent_content_remove_option;
-                    document.getElementById("memoryWorkingSetLimit").value = pref.memory_working_set_limit;
                     updateNetworkInterfaces(pref.current_network_interface, pref.current_interface_name);
                     updateInterfaceAddresses(pref.current_network_interface, pref.current_interface_address);
+                    document.getElementById("resumeDataStorageType").value = pref.resume_data_storage_type;
+                    if (pref.torrent_content_remove_option !== undefined)
+                        document.getElementById("torrentContentRemoveOption").value = pref.torrent_content_remove_option;
+                    else
+                        document.getElementById("torrentContentRemoveOption").closest("tr").style.display = "none";
+                    document.getElementById("memoryWorkingSetLimit").value = pref.memory_working_set_limit;
                     document.getElementById("saveResumeDataInterval").value = pref.save_resume_data_interval;
-                    document.getElementById("saveStatisticsInterval").value = pref.save_statistics_interval;
+                    if (pref.save_statistics_interval !== undefined)
+                        document.getElementById("saveStatisticsInterval").value = pref.save_statistics_interval;
+                    else
+                        document.getElementById("saveStatisticsInterval").closest("tr").style.display = "none";
                     document.getElementById("torrentFileSizeLimit").value = (pref.torrent_file_size_limit / 1024 / 1024);
-                    document.getElementById("confirmTorrentRecheck").checked = pref.confirm_torrent_recheck;
+                    if (pref.confirm_torrent_recheck !== undefined)
+                        document.getElementById("confirmTorrentRecheck").checked = pref.confirm_torrent_recheck;
+                    else
+                        document.getElementById("confirmTorrentRecheck").closest("tr").style.display = "none";
                     document.getElementById("recheckTorrentsOnCompletion").checked = pref.recheck_completed_torrents;
-                    document.getElementById("appInstanceName").value = pref.app_instance_name;
+                    if (pref.app_instance_name !== undefined)
+                        document.getElementById("appInstanceName").value = pref.app_instance_name;
+                    else
+                        document.getElementById("appInstanceName").closest("tr").style.display = "none";
                     document.getElementById("refreshInterval").value = pref.refresh_interval;
                     document.getElementById("resolvePeerHostNames").checked = pref.resolve_peer_host_names;
                     document.getElementById("resolvePeerCountries").checked = pref.resolve_peer_countries;
@@ -2759,9 +2794,18 @@ Use ';' to split multiple entries. Can use wildcard '*'.)QBT_TR[CONTEXT=OptionsD
                     document.getElementById("enableEmbeddedTracker").checked = pref.enable_embedded_tracker;
                     document.getElementById("embeddedTrackerPort").value = pref.embedded_tracker_port;
                     document.getElementById("embeddedTrackerPortForwarding").checked = pref.embedded_tracker_port_forwarding;
-                    document.getElementById("markOfTheWeb").checked = pref.mark_of_the_web;
-                    document.getElementById("ignoreSSLErrors").checked = pref.ignore_ssl_errors;
-                    document.getElementById("pythonExecutablePath").value = pref.python_executable_path;
+                    if (pref.mark_of_the_web !== undefined)
+                        document.getElementById("markOfTheWeb").checked = pref.mark_of_the_web;
+                    else
+                        document.getElementById("markOfTheWeb").closest("tr").style.display = "none";
+                    if (pref.ignore_ssl_errors !== undefined)
+                        document.getElementById("ignoreSSLErrors").checked = pref.ignore_ssl_errors;
+                    else
+                        document.getElementById("ignoreSSLErrors").closest("tr").style.display = "none";
+                    if (pref.python_executable_path !== undefined)
+                        document.getElementById("pythonExecutablePath").value = pref.python_executable_path;
+                    else
+                        document.getElementById("pythonExecutablePath").closest("tr").style.display = "none";
                     // libtorrent section
                     document.getElementById("bdecodeDepthLimit").value = pref.bdecode_depth_limit;
                     document.getElementById("bdecodeTokenLimit").value = pref.bdecode_token_limit;
@@ -2802,14 +2846,20 @@ Use ';' to split multiple entries. Can use wildcard '*'.)QBT_TR[CONTEXT=OptionsD
                     document.getElementById("announceAllTrackers").checked = pref.announce_to_all_trackers;
                     document.getElementById("announceAllTiers").checked = pref.announce_to_all_tiers;
                     document.getElementById("announceIP").value = pref.announce_ip;
-                    document.getElementById("announcePort").value = pref.announce_port;
+                    if (pref.announce_port !== undefined)
+                        document.getElementById("announcePort").value = pref.announce_port;
+                    else
+                        document.getElementById("announcePort").closest("tr").style.display = "none";
                     document.getElementById("maxConcurrentHTTPAnnounces").value = pref.max_concurrent_http_announces;
                     document.getElementById("stopTrackerTimeout").value = pref.stop_tracker_timeout;
                     document.getElementById("peerTurnover").value = pref.peer_turnover;
                     document.getElementById("peerTurnoverCutoff").value = pref.peer_turnover_cutoff;
                     document.getElementById("peerTurnoverInterval").value = pref.peer_turnover_interval;
                     document.getElementById("requestQueueSize").value = pref.request_queue_size;
-                    document.getElementById("dhtBootstrapNodes").value = pref.dht_bootstrap_nodes;
+                    if (pref.dht_bootstrap_nodes !== undefined)
+                        document.getElementById("dhtBootstrapNodes").value = pref.dht_bootstrap_nodes;
+                    else
+                        document.getElementById("dhtBootstrapNodes").closest("tr").style.display = "none";
                     document.getElementById("i2pInboundQuantity").value = pref.i2p_inbound_quantity;
                     document.getElementById("i2pOutboundQuantity").value = pref.i2p_outbound_quantity;
                     document.getElementById("i2pInboundLength").value = pref.i2p_inbound_length;
@@ -2861,7 +2911,7 @@ Use ';' to split multiple entries. Can use wildcard '*'.)QBT_TR[CONTEXT=OptionsD
             // When adding a torrent
             settings["torrent_content_layout"] = document.getElementById("contentlayout_select").getSelected()[0].value;
             settings["add_to_top_of_queue"] = document.getElementById("addToTopOfQueueCheckbox").checked;
-            settings["add_stopped_enabled"] = document.getElementById("dontstartdownloads_checkbox").checked;
+            settings["start_paused_enabled"] = document.getElementById("dontstartdownloads_checkbox").checked;
             settings["torrent_stop_condition"] = document.getElementById("stopConditionSelect").getSelected()[0].value;
             settings["merge_trackers"] = document.getElementById("mergeTrackersInput").checked;
             settings["auto_delete_mode"] = Number(document.getElementById("deletetorrentfileafter_checkbox").checked);
@@ -3130,9 +3180,8 @@ Use ';' to split multiple entries. Can use wildcard '*'.)QBT_TR[CONTEXT=OptionsD
             // Add trackers
             settings["add_trackers_enabled"] = document.getElementById("add_trackers_checkbox").checked;
             settings["add_trackers"] = document.getElementById("add_trackers_textarea").value;
-            settings["add_trackers_from_url_enabled"] = document.getElementById("addTrackersFromURLCheckbox").checked;
-            settings["add_trackers_url_list"] = document.getElementById("addTrackersURLListTextarea").value;
-            settings["add_trackers_url"] = document.getElementById("addTrackersURL").value;
+            settings["auto_update_trackers_enabled"] = document.getElementById("addTrackersFromURLCheckbox").checked;
+            settings["customize_trackers_list_url"] = document.getElementById("addTrackersURL").value;
 
             // RSS Tab
             settings["rss_processing_enabled"] = document.getElementById("enable_fetching_rss_feeds_checkbox").checked;
