@@ -2663,8 +2663,8 @@ Use ';' to split multiple entries. Can use wildcard '*'.)QBT_TR[CONTEXT=OptionsD
                     document.getElementById("add_trackers_checkbox").checked = pref.add_trackers_enabled;
                     document.getElementById("add_trackers_textarea").value = pref.add_trackers;
                     document.getElementById("addTrackersFromURLCheckbox").checked = pref.add_trackers_from_url_enabled;
-                    document.getElementById("addTrackersURLListTextarea").value = pref.add_trackers_url_list;
-                    document.getElementById("addTrackersURL").value = pref.add_trackers_url;
+                    document.getElementById("addTrackersURLListTextarea").value = pref.add_trackers_url_list || "";
+                    document.getElementById("addTrackersURL").value = pref.add_trackers_url || "";
                     updateAddTrackersEnabled();
                     updateAddTrackersFromURLEnabled();
 
