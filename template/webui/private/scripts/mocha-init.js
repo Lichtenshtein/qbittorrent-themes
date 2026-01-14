@@ -520,7 +520,11 @@ const initializeWindows = () => {
     deleteSelectedTorrentsFN = (forceDeleteFiles = false) => {
         const hashes = torrentsTable.selectedRowsIds();
         if (hashes.length > 0) {
-            if (window.qBittorrent.Cache.preferences.get().confirm_torrent_deletion) {
+            let confirmDeletion = window.qBittorrent.Cache.preferences.get().confirm_torrent_deletion;
+            if (confirmDeletion === undefined)
+                confirmDeletion = clientData.get("confirm_torrent_deletion", "true") === "true";
+
+            if (confirmDeletion) {
                 new MochaUI.Modal({
                     ...window.qBittorrent.Dialog.baseModalOptions,
                     id: "confirmDeletionPage",
