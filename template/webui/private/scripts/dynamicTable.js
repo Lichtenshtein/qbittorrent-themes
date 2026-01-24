@@ -1260,10 +1260,10 @@ window.qBittorrent.DynamicTable ??= (() => {
                     case "queuedUP":
                         stateClass = "stateQueued";
                         break;
-                    case "checkingDL":
-                    case "checkingUP":
                     case "queuedForChecking":
                     case "checkingResumeData":
+                    case "checkingDL":
+                    case "checkingUP":
                         stateClass = "stateChecking";
                         break;
                     case "moving":
@@ -1375,6 +1375,10 @@ window.qBittorrent.DynamicTable ??= (() => {
                 }
 
                 div.className = `${getStateIconClasses(state)} stateIconColumn`;
+            };
+
+            this.columns["state_icon"].compareRows = (row1, row2) => {
+                return compareNumbers(row1.full_data._statusOrder, row2.full_data._statusOrder);
             };
 
             this.columns["state_icon"].onVisibilityChange = (columnName) => {
@@ -1544,11 +1548,23 @@ window.qBittorrent.DynamicTable ??= (() => {
             // ratio
             this.columns["ratio"].updateTd = displayRatio;
 
+            const compareWithInfinity = (val1, val2) => {
+                if (val1 < 0) val1 = Infinity;
+                if (val2 < 0) val2 = Infinity;
+                return compareNumbers(val1, val2);
+            };
+
+            this.columns["ratio"].compareRows = function(row1, row2) {
+                return compareWithInfinity(this.getRowValue(row1), this.getRowValue(row2));
+            };
+
             // popularity
             this.columns["popularity"].updateTd = displayRatio;
 
             // creation_date
             this.columns["creation_date"].updateTd = displayDate;
+
+            this.columns["popularity"].compareRows = this.columns["ratio"].compareRows;
 
             // added on
             this.columns["added_on"].updateTd = displayDate;
@@ -1593,6 +1609,7 @@ window.qBittorrent.DynamicTable ??= (() => {
 
             // max_ratio
             this.columns["max_ratio"].updateTd = displayRatio;
+            this.columns["max_ratio"].compareRows = this.columns["ratio"].compareRows;
 
             // seen_complete
             this.columns["seen_complete"].updateTd = displayDate;
@@ -1610,6 +1627,7 @@ window.qBittorrent.DynamicTable ??= (() => {
                     td.title = formattedVal;
                 }
             };
+            this.columns["last_activity"].compareRows = this.columns["ratio"].compareRows;
 
             // availability
             this.columns["availability"].updateTd = function(td, row) {
