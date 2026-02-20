@@ -575,7 +575,7 @@ const initializeWindows = () => {
     stopFN = () => {
         const hashes = torrentsTable.selectedRowsIds();
         if (hashes.length) {
-            fetch("api/v2/torrents/stop", {
+            fetch("api/v2/torrents/pause", {
                 method: "POST",
                 body: new URLSearchParams({
                     hashes: hashes.join("|")
@@ -588,7 +588,7 @@ const initializeWindows = () => {
     startFN = () => {
         const hashes = torrentsTable.selectedRowsIds();
         if (hashes.length) {
-            fetch("api/v2/torrents/start", {
+            fetch("api/v2/torrents/resume", {
                 method: "POST",
                 body: new URLSearchParams({
                     hashes: hashes.join("|")
@@ -765,7 +765,7 @@ const initializeWindows = () => {
     startVisibleTorrentsFN = () => {
         const hashes = torrentsTable.getFilteredTorrentsHashes(selectedStatus, selectedCategory, selectedTag, selectedTracker);
         if (hashes.length > 0) {
-            fetch("api/v2/torrents/start", {
+            fetch("api/v2/torrents/resume", {
                     method: "POST",
                     body: new URLSearchParams({
                         hashes: hashes.join("|")
@@ -808,7 +808,7 @@ const initializeWindows = () => {
     stopVisibleTorrentsFN = () => {
         const hashes = torrentsTable.getFilteredTorrentsHashes(selectedStatus, selectedCategory, selectedTag, selectedTracker);
         if (hashes.length > 0) {
-            fetch("api/v2/torrents/stop", {
+            fetch("api/v2/torrents/pause", {
                     method: "POST",
                     body: new URLSearchParams({
                         hashes: hashes.join("|")
@@ -1257,7 +1257,7 @@ const initializeWindows = () => {
         e.stopPropagation();
 
         if (confirm("QBT_TR(Would you like to stop all torrents?)QBT_TR[CONTEXT=MainWindow]")) {
-            fetch("api/v2/torrents/stop", {
+            fetch("api/v2/torrents/pause", {
                 method: "POST",
                 body: new URLSearchParams({
                     hashes: "all"
@@ -1272,7 +1272,7 @@ const initializeWindows = () => {
         e.stopPropagation();
 
         if (confirm("QBT_TR(Would you like to start all torrents?)QBT_TR[CONTEXT=MainWindow]")) {
-            fetch("api/v2/torrents/start", {
+            fetch("api/v2/torrents/resume", {
                 method: "POST",
                 body: new URLSearchParams({
                     hashes: "all"
@@ -1303,8 +1303,13 @@ const initializeWindows = () => {
 
             const hashes = torrentsTable.selectedRowsIds();
             if (hashes.length > 0) {
+                const actionMap = {
+                    stop: "pause",
+                    start: "resume",
+                    recheck: "recheck"
+                };
                 for (const hash of hashes) {
-                    fetch(`api/v2/torrents/${item}`, {
+                    fetch(`api/v2/torrents/${actionMap[item]}`, {
                         method: "POST",
                         body: new URLSearchParams({
                             hashes: hash
