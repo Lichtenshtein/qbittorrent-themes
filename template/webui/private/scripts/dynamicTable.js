@@ -1663,6 +1663,7 @@ window.qBittorrent.DynamicTable ??= (() => {
 
         applyFilter(row, filterName, category, tag, trackerHost, filterTerms) {
             const { state, upspeed, dlspeed } = row["full_data"];
+            const isStoppedState = state.includes("stopped") || state.includes("paused");
             let inactive = false;
 
             switch (filterName) {
@@ -1679,11 +1680,11 @@ window.qBittorrent.DynamicTable ??= (() => {
                         return false;
                     break;
                 case "stopped":
-                    if (!state.includes("stopped"))
+                    if (!isStoppedState)
                         return false;
                     break;
                 case "running":
-                    if (state.includes("stopped"))
+                    if (isStoppedState)
                         return false;
                     break;
                 case "stalled":
@@ -1889,6 +1890,7 @@ window.qBittorrent.DynamicTable ??= (() => {
                 const prefKey =
                     (state !== "uploading")
                     && (state !== "stoppedUP")
+                    && (state !== "pausedUP")
                     && (state !== "forcedUP")
                     && (state !== "stalledUP")
                     && (state !== "queuedUP")
@@ -1899,7 +1901,7 @@ window.qBittorrent.DynamicTable ??= (() => {
                 if (clientData.get(prefKey) !== "1")
                     return true;
 
-                if (state.includes("stopped"))
+                if (state.includes("stopped") || state.includes("paused"))
                     startFN();
                 else
                     stopFN();
